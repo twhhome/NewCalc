@@ -394,7 +394,7 @@ BigNum BigNum::subnum(int start, int end)
 	return rslt;
 }
 
-ostream &operator<<(ostream &os, BigNum &bn)
+ostream &operator<<(ostream &os, BigNum const &bn)
 {
 	if (bn.s == (-1))
 		os << "-";

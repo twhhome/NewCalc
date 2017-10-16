@@ -90,7 +90,7 @@ public:
 	void reverse(); //reverse the number in the integer array
 	BigNum subnum(int start, int end);
 
-	friend ostream &operator<<(ostream &os, BigNum &bn);
+	friend ostream &operator<<(ostream &os, BigNum const &bn);
 	friend istream &operator>>(istream &in, BigNum &bn);
 };
 

@@ -4,7 +4,10 @@
 int main()
 {
 	while (Input())
-		cout << Calc(0, str.length() - 1) << endl;
+	{
+		BigNum ans = Calc(0, str.length() - 1);
+		Output(ans);
+	}
 	/*
 	BigNum a, b;
 	while (1)

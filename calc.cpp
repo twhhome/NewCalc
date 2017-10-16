@@ -1,9 +1,12 @@
 #include "BigNum.h"
 
-string str;
+string str; // the expression
+
+int t = 0;
 
 int Input() // input of the expression
 {
+	cout << "In[" << ++t << "]=";
 	cin >> str;
 	if (str == "exit")
 		return 0; // return 0 to break the circulation
@@ -139,4 +142,10 @@ BigNum Calc(int s, int e)
 		}
 	}
 	return ans;
+}
+
+void Output(BigNum const &bn)
+{
+	cout << "Out[" << t << "]=";
+	cout << bn << endl;
 }
