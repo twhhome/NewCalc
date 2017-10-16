@@ -1,17 +1,29 @@
+/*
+the way to store number in the integer array is like:(if MAXM = 10000)
+n=1234567890
+then integer[0] = 7890, integer[1] = 3456, integer[2] = 12
+*/
+
 #include<string>
 #include<iostream>
 #include<algorithm>
 #include<stack>
+#include<iomanip>
 using namespace std;
 
 #pragma once
-const int MAXN = 500;
+const int MAXN = 10; // the max number of the elements of the array
+const int MAXM = 10000; // the max number of the elements in the array
+/*if the max num which BigNum can store is 100000, 
+then MAXN = 10, and each element in the array is 
+no bigger than 10000*/
 
 class BigNum
 {
 private:
 	int integer[MAXN];
-	int len;
+	//int len;
+	int inte_len; // the length of the integer array
 	int s; //positive:1 zero:0 negative:-1
 
 public:
@@ -21,7 +33,7 @@ public:
 	BigNum(int num) { set(num); }
 	BigNum(BigNum const &src);
 
-	int get_len() const { return len; }
+	//int get_len() const { return len; }
 	void set(int num);
 	void set(string str);
 	void set(char *num);
@@ -80,14 +92,14 @@ public:
 
 	
 	BigNum &operator=(BigNum const &other) {
-		len = other.len;
+		//len = other.len;
+		inte_len = other.inte_len;
 		s = other.s;
-		for (int i = 0; i < len; i++)
+		for (int i = 0; i < inte_len; i++)
 			integer[i] = other.integer[i];
 		return *this;
 	}
 	
-	void reverse(); //reverse the number in the integer array
 	BigNum subnum(int start, int end);
 
 	friend ostream &operator<<(ostream &os, BigNum const &bn);
