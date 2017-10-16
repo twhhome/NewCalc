@@ -67,10 +67,10 @@ void BigNum::set(string str)
 	inte_len = 0;
 	for (int i = tmp.length() - 1; i >= 0; i--)
 	{
-		if ((tmp.length() - i - 1) % 4 == 3)
-			integer[inte_len++] = string_to_int(tmp, i, i + 3);
+		if ((tmp.length() - i - 1) % bit == bit - 1)
+			integer[inte_len++] = string_to_int(tmp, i, i + bit - 1);
 		else if (i == 0)
-			integer[inte_len++] = string_to_int(tmp, i, (tmp.length() - ((tmp.length() - i - 1) / 4) * 4 - 1));
+			integer[inte_len++] = string_to_int(tmp, i, (tmp.length() - ((tmp.length() - i - 1) / bit) * bit - 1));
 	}
 }
 
@@ -92,8 +92,8 @@ void BigNum::set(int num)
 		n = -n;
 	while (n != 0)
 	{
-		integer[inte_len++] = n % 10000;
-		n = n / 10000;
+		integer[inte_len++] = n % MAXM;
+		n = n / MAXM;
 	}
 	if (num > 0)
 		s = 1;
@@ -120,9 +120,9 @@ BigNum BigNum::add(BigNum const &other) const
 			else
 				curr = integer[i] + other.integer[i];
 			curr += rslt.integer[rslt.inte_len];
-			rslt.integer[rslt.inte_len++] = curr % 10000;
+			rslt.integer[rslt.inte_len++] = curr % MAXM;
 			rslt.integer[rslt.inte_len] = 0;
-			rslt.integer[rslt.inte_len] = curr / 10000;
+			rslt.integer[rslt.inte_len] = curr / MAXM;
 		}
 		if (rslt.integer[rslt.inte_len] != 0)
 			rslt.inte_len++;
@@ -171,7 +171,7 @@ BigNum BigNum::sub(BigNum const &other) const
 				else
 					curr = integer[i] - other.integer[i];
 				curr += rslt.integer[rslt.inte_len];
-				rslt.integer[rslt.inte_len++] = (curr < 0) ? 10000 + curr : curr;
+				rslt.integer[rslt.inte_len++] = (curr < 0) ? MAXM + curr : curr;
 				rslt.integer[rslt.inte_len] = 0;
 				rslt.integer[rslt.inte_len] = (curr < 0) ? -1 : 0;
 			}
@@ -242,10 +242,10 @@ BigNum BigNum::multi(BigNum const &other) const
 	for (int i = 0; i <= maxipj; i++)
 	{
 		int curr = rslt.integer[i];
-		rslt.integer[i] = curr % 10000;
+		rslt.integer[i] = curr % MAXM;
 		if (i == maxipj)
 			rslt.integer[i + 1] = 0;
-		rslt.integer[i + 1] += curr / 10000;
+		rslt.integer[i + 1] += curr / MAXM;
 		rslt.inte_len++;
 	}
 	if (rslt.integer[rslt.inte_len] != 0)
@@ -270,7 +270,7 @@ BigNum BigNum::div(BigNum &other) const
 	tmp.s = 1;
 	for (int i = inte_len - other.inte_len; i >= 0; i--)
 	{
-		for (int j = 1; j <= 10000; j++)
+		for (int j = 1; j <= MAXM; j++)
 		{
 			if (other * j > tmp.subnum(i, tmp.inte_len - 1))
 			{
@@ -419,7 +419,7 @@ ostream &operator<<(ostream &os, BigNum const &bn)
 	for (int i = bn.inte_len - 1; i >= 0; i--)
 	{
 		if (i != bn.inte_len - 1)
-			os << setw(4) << setfill('0') << bn.integer[i];
+			os << setw(bit) << setfill('0') << bn.integer[i];
 		else
 			os << bn.integer[i];
 	}

@@ -12,9 +12,10 @@ then integer[0] = 7890, integer[1] = 3456, integer[2] = 12
 using namespace std;
 
 #pragma once
-const int MAXN = 10; // the max number of the elements of the array
+const int MAXN = 250; // the max number of the elements of the array
 const int MAXM = 10000; // the max number of the elements in the array
-/*if the max num which BigNum can store is 100000, 
+const int bit = 4;
+/*if the max num which BigNum can store is 1000, 
 then MAXN = 10, and each element in the array is 
 no bigger than 10000*/
 
