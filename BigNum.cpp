@@ -1,6 +1,6 @@
 #include "BigNum.h"
 
-string strexczero(string str) // wipe off zeros in front of the str
+string strexczero(string &str) // wipe off zeros in front of the str
 {
 	string rslt;
 	int flag = 0;
@@ -42,16 +42,27 @@ int string_to_int(string &str, int start, int end)
 	return n;
 }
 
+vector<int> vector_reverse(vector<int> *vec)
+{
+	vector<int> ans;
+	vector<int>::reverse_iterator ptr = vec->rbegin();
+	while (ptr != vec->rend())
+	{
+		ans.push_back(*ptr);
+		ptr++;
+	}
+	return ans;
+}
+
 BigNum::BigNum(BigNum const &src)
 {
 	//len = src.len;
-	inte_len = src.inte_len;
+	//inte_len = src.inte_len;
 	s = src.s;
-	for (int i = 0; i < inte_len; i++)
-		integer[i] = src.integer[i];
+	integer = src.integer;
 }
 
-void BigNum::set(string str)
+void BigNum::set(string &str)
 {
 	string tmp = strexczero(str);
 	if (tmp[0] == '-')
@@ -64,13 +75,14 @@ void BigNum::set(string str)
 	else
 		s = 1;
 	//len = tmp.length();
-	inte_len = 0;
+	//inte_len = 0;
+	integer.clear();
 	for (int i = tmp.length() - 1; i >= 0; i--)
 	{
 		if ((tmp.length() - i - 1) % bit == bit - 1)
-			integer[inte_len++] = string_to_int(tmp, i, i + bit - 1);
+			integer.push_back(string_to_int(tmp, i, i + bit - 1));
 		else if (i == 0)
-			integer[inte_len++] = string_to_int(tmp, i, (tmp.length() - ((tmp.length() - i - 1) / bit) * bit - 1));
+			integer.push_back(string_to_int(tmp, i, (tmp.length() - ((tmp.length() - i - 1) / bit) * bit - 1)));
 	}
 }
 
@@ -84,15 +96,15 @@ void BigNum::set(char *num)
 void BigNum::set(int num)
 {
 	//len = 0;
-	inte_len = 0;
+	//inte_len = 0;
 	int n = num;
 	if (num == 0)
-		integer[inte_len++] = 0;
+		integer.push_back(0);
 	else if (num < 0)
 		n = -n;
 	while (n != 0)
 	{
-		integer[inte_len++] = n % MAXM;
+		integer.push_back(n % MAXM);
 		n = n / MAXM;
 	}
 	if (num > 0)
@@ -106,26 +118,29 @@ void BigNum::set(int num)
 BigNum BigNum::add(BigNum const &other) const
 {
 	BigNum rslt;
-	rslt.inte_len = 0;
+	rslt.integer.clear();
+	//rslt.inte_len = 0;
 	if (s >= 0 && other.s >= 0)
 	{
 		rslt.s = 1;
-		for (int i = 0; i < inte_len || i < other.inte_len; i++)
+		for (int i = 0; i < integer.size() || i < other.integer.size(); i++)
 		{
 			int curr;
-			if (i >= inte_len)
+			if (i >= integer.size())
 				curr = other.integer[i];
-			else if (i >= other.inte_len)
+			else if (i >= other.integer.size())
 				curr = integer[i];
 			else
 				curr = integer[i] + other.integer[i];
-			curr += rslt.integer[rslt.inte_len];
-			rslt.integer[rslt.inte_len++] = curr % MAXM;
-			rslt.integer[rslt.inte_len] = 0;
-			rslt.integer[rslt.inte_len] = curr / MAXM;
+			curr += (!rslt.integer.empty()) ?  rslt.integer[rslt.integer.size() - 1] : 0;
+			if (rslt.integer.empty())
+				rslt.integer.push_back(curr % MAXM);
+			else
+				rslt.integer[rslt.integer.size() - 1] = curr % MAXM;
+			rslt.integer.push_back(curr / MAXM);
 		}
-		if (rslt.integer[rslt.inte_len] != 0)
-			rslt.inte_len++;
+		if (rslt.integer[rslt.integer.size() - 1] == 0)
+			rslt.integer.pop_back();
 	}
 	else if (s >= 0 && other.s < 0)
 	{
@@ -154,39 +169,39 @@ BigNum BigNum::add(BigNum const &other) const
 BigNum BigNum::sub(BigNum const &other) const
 {
 	BigNum rslt;
-	rslt.inte_len = 0;
+	//rslt.inte_len = 0;
+	rslt.integer.clear();
 	if (s >= 0 && other.s >= 0)
 	{
 		if (*this >= other)
 		{
 			rslt.s = 1;
-			rslt.integer[rslt.inte_len] = 0;
-			for (int i = 0; i < inte_len || i < other.inte_len; i++)
+			rslt.integer.push_back(0);
+			//rslt.integer[rslt.inte_len] = 0;
+			for (int i = 0; i < integer.size() || i < other.integer.size(); i++)
 			{
 				int curr;
-				if (i >= inte_len)
+				if (i >= integer.size())
 					curr = other.integer[i];
-				else if (i >= other.inte_len)
+				else if (i >= other.integer.size())
 					curr = integer[i];
 				else
 					curr = integer[i] - other.integer[i];
-				curr += rslt.integer[rslt.inte_len];
-				rslt.integer[rslt.inte_len++] = (curr < 0) ? MAXM + curr : curr;
-				rslt.integer[rslt.inte_len] = 0;
-				rslt.integer[rslt.inte_len] = (curr < 0) ? -1 : 0;
+				curr += rslt.integer[rslt.integer.size() - 1];
+				rslt.integer[rslt.integer.size() - 1] = (curr < 0) ? MAXM + curr : curr;
+				rslt.integer.push_back((curr < 0) ? -1 : 0);
 			}
-			for (int i = rslt.inte_len - 1; i >= 0; i--)
+			for (int i = rslt.integer.size() - 1; i >= 0; i--)
 			{
 				if (rslt.integer[i] != 0)
-				{
-					rslt.inte_len = i + 1;
 					break;
-				}
+				if (rslt.integer[i] == 0)
+					rslt.integer.pop_back();
 			}
-			if (rslt.integer[rslt.inte_len - 1] == 0)
+			if (rslt.integer.empty())
 			{
 				rslt.s = 0;
-				rslt.inte_len = 1;
+				rslt.integer.push_back(0);
 			}
 		}
 		else if (*this < other)
@@ -223,33 +238,36 @@ BigNum BigNum::sub(BigNum const &other) const
 BigNum BigNum::multi(BigNum const &other) const
 {
 	BigNum rslt;
-	rslt.inte_len = 0;
-	int maxipj = -1; //the maximum of i plus j
-	for (int i = 0; i < other.inte_len; i++)
+	//rslt.inte_len = 0;
+	rslt.integer.clear();
+	//int maxipj = -1; //the maximum of i plus j
+	for (int i = 0; i < other.integer.size(); i++)
 	{
-		for (int j = 0; j < inte_len; j++)
+		for (int j = 0; j < integer.size(); j++)
 		{
 			int curr;
 			curr = other.integer[i] * integer[j];
-			if (i + j > maxipj)
+			if (i + j > rslt.integer.size() - 1 || rslt.integer.empty())
 			{
-				maxipj = i + j;
-				rslt.integer[i + j] = 0;
+				//maxipj = i + j;
+				rslt.integer.push_back(0);
+				//rslt.integer[i + j] = 0;
 			}
 			rslt.integer[i + j] += curr;
 		}
 	}
-	for (int i = 0; i <= maxipj; i++)
+	int len = rslt.integer.size();
+	for (int i = 0; i <= len - 1; i++)
 	{
 		int curr = rslt.integer[i];
 		rslt.integer[i] = curr % MAXM;
-		if (i == maxipj)
-			rslt.integer[i + 1] = 0;
+		if (i == rslt.integer.size() - 1)
+			rslt.integer.push_back(0);
+			//rslt.integer[i + 1] = 0;
 		rslt.integer[i + 1] += curr / MAXM;
-		rslt.inte_len++;
 	}
-	if (rslt.integer[rslt.inte_len] != 0)
-		rslt.inte_len++;
+	if (rslt.integer[rslt.integer.size() - 1] == 0)
+		rslt.integer.pop_back();
 	rslt.s = s * other.s;
 	return rslt;
 }
@@ -257,6 +275,9 @@ BigNum BigNum::multi(BigNum const &other) const
 BigNum BigNum::div(BigNum &other) const
 {
 	BigNum rslt, tmp, tmp2;
+	rslt.integer.clear();
+	tmp.integer.clear();
+	tmp2.integer.clear();
 	bool book = false; // whether other is smaller than 0
 	bool not_zero = false; // whether the first number is zero
 	rslt.s = s * other.s;
@@ -265,34 +286,55 @@ BigNum BigNum::div(BigNum &other) const
 		other.s = -other.s;
 		book = true;
 	}
-	rslt.inte_len = inte_len - other.inte_len + 1;
+	//rslt.inte_len = inte_len - other.inte_len + 1;
+	for (int i = 1; i <= integer.size() - other.integer.size() + 1; i++)
+		rslt.integer.push_back(0);
 	tmp = *this;
 	tmp.s = 1;
-	for (int i = inte_len - other.inte_len; i >= 0; i--)
+	for (int i = rslt.integer.size() - 1; i >= 0; i--)
 	{
 		for (int j = 1; j <= MAXM; j++)
 		{
-			if (other * j > tmp.subnum(i, tmp.inte_len - 1))
+			if (other * j > tmp.subnum(i, tmp.integer.size() - 1))
 			{
 				if (j == 1 && not_zero == false)
-					rslt.inte_len--;
+					rslt.integer.pop_back();
 				else
 				{
 					not_zero = true;
 					rslt.integer[i] = j - 1;
 					tmp2 = other * (j - 1);
+					/*
 					tmp2.inte_len += i;
 					for (int k = tmp2.inte_len - 1; k >= 0; k--)
 						tmp2.integer[k] = ((k - i) >= 0) ? tmp2.integer[k - i] : 0;
+					*/
+					int len = tmp2.integer.size();
+					for (int k = 0; k < i; k++)
+					{
+						for (int l = len - 1; l >= 0; l--)
+						{
+							if (l == len - 1)
+							{
+								tmp2.integer.push_back(tmp2.integer[tmp2.integer.size() - 1]);
+								tmp2.integer[tmp2.integer.size() - 2] = 0;
+							}
+							else
+							{
+								tmp2.integer[l + k + 1] = tmp2.integer[l + k];
+								tmp2.integer[l + k] = 0;
+							}
+						}
+					}
 					tmp -= tmp2;
 				}
 				break;
 			}
 		}
 	}
-	if (inte_len < other.inte_len)
+	if (integer.size() < other.integer.size())
 		rslt = 0;
-	else if (rslt.inte_len == 0)
+	else if (rslt.integer.size() == 0)
 		rslt = 0;
 	if (book) // if other is smaller than 0, then recover it
 		other.s = -other.s;
@@ -345,9 +387,9 @@ bool BigNum::operator==(BigNum const &other) const
 		return false;
 	else
 	{
-		if (inte_len == other.inte_len)
+		if (integer.size() == other.integer.size())
 		{
-			for (int i = 0; i < inte_len; i++)
+			for (int i = 0; i < integer.size(); i++)
 			{
 				if (integer[i] != other.integer[i])
 					return false;
@@ -370,11 +412,11 @@ bool BigNum::operator<(BigNum const &other) const
 		return (s < other.s) ? true : false;
 	else
 	{
-		if (inte_len != other.inte_len)
-			return (inte_len < other.inte_len) ? true : false;
+		if (integer.size() != other.integer.size())
+			return (integer.size() < other.integer.size()) ? true : false;
 		else
 		{
-			for (int i = inte_len - 1; i >= 0; i--)
+			for (int i = integer.size() - 1; i >= 0; i--)
 			{
 				if (integer[i] != other.integer[i])
 					return (integer[i] < other.integer[i]) ? true : false;
@@ -406,9 +448,9 @@ BigNum BigNum::subnum(int start, int end)
 {
 	BigNum rslt;
 	rslt.s = s;
-	rslt.inte_len = end - start + 1;
+	rslt.integer.clear();
 	for (int i = start; i <= end; i++)
-		rslt.integer[i - start] = integer[i];
+		rslt.integer.push_back(integer[i]);
 	return rslt;
 }
 
@@ -416,9 +458,9 @@ ostream &operator<<(ostream &os, BigNum const &bn)
 {
 	if (bn.s == (-1))
 		os << "-";
-	for (int i = bn.inte_len - 1; i >= 0; i--)
+	for (int i = bn.integer.size() - 1; i >= 0; i--)
 	{
-		if (i != bn.inte_len - 1)
+		if (i != bn.integer.size() - 1)
 			os << setw(bit) << setfill('0') << bn.integer[i];
 		else
 			os << bn.integer[i];

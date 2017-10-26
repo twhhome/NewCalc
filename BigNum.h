@@ -9,6 +9,7 @@ then integer[0] = 7890, integer[1] = 3456, integer[2] = 12
 #include<algorithm>
 #include<stack>
 #include<iomanip>
+#include<vector>
 using namespace std;
 
 #pragma once
@@ -16,15 +17,17 @@ const int MAXN = 250; // the max number of the elements of the array
 const int MAXM = 10000; // the max number of the elements in the array
 const int bit = 4;
 /*if the max num which BigNum can store is 1000, 
-then MAXN = 10, and each element in the array is 
+then MAXN = 250, and each element in the array is 
 no bigger than 10000*/
 
 class BigNum
 {
 private:
-	int integer[MAXN];
+	//int integer[MAXN];
 	//int len;
-	int inte_len; // the length of the integer array
+	//int *integer;
+	vector<int> integer;
+	//int inte_len; // the length of the integer array
 	int s; //positive:1 zero:0 negative:-1
 
 public:
@@ -36,7 +39,7 @@ public:
 
 	//int get_len() const { return len; }
 	void set(int num);
-	void set(string str);
+	void set(string &str);
 	void set(char *num);
 
 	BigNum add(BigNum const &other) const;
@@ -94,10 +97,8 @@ public:
 	
 	BigNum &operator=(BigNum const &other) {
 		//len = other.len;
-		inte_len = other.inte_len;
 		s = other.s;
-		for (int i = 0; i < inte_len; i++)
-			integer[i] = other.integer[i];
+		integer = other.integer;
 		return *this;
 	}
 	

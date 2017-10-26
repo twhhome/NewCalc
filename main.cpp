@@ -2,6 +2,7 @@
 
 int main()
 {
+	
 	while (Input())
 	{
 		BigNum ans = Calc(0, str.length() - 1);
