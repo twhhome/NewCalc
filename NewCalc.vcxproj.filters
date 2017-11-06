@@ -24,9 +24,15 @@
     <ClCompile Include="calc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Fraction.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigNum.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Fraction.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

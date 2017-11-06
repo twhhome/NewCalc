@@ -1,5 +1,9 @@
 #include "BigNum.h"
 
+extern const int MAXN;
+extern const int MAXM;
+extern const int bit;
+
 string strexczero(string &str) // wipe off zeros in front of the str
 {
 	string rslt;

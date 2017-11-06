@@ -1,3 +1,6 @@
+#ifndef BIGNUM_H
+#define BIGNUM_H
+
 /*
 the way to store number in the integer array is like:(if MAXM = 10000)
 n=1234567890
@@ -13,21 +16,19 @@ then integer[0] = 7890, integer[1] = 3456, integer[2] = 12
 using namespace std;
 
 #pragma once
-const int MAXN = 250; // the max number of the elements of the array
-const int MAXM = 10000; // the max number of the elements in the array
-const int bit = 4;
+extern const int MAXN = 250; // the max number of the elements of the array
+extern const int MAXM = 10000; // the max number of the elements in the array
+extern const int bit = 4;
 /*if the max num which BigNum can store is 1000, 
 then MAXN = 250, and each element in the array is 
 no bigger than 10000*/
 
+//typedef BigNum Int;
+
 class BigNum
 {
 private:
-	//int integer[MAXN];
-	//int len;
-	//int *integer;
 	vector<int> integer;
-	//int inte_len; // the length of the integer array
 	int s; //positive:1 zero:0 negative:-1
 
 public:
@@ -37,7 +38,6 @@ public:
 	BigNum(int num) { set(num); }
 	BigNum(BigNum const &src);
 
-	//int get_len() const { return len; }
 	void set(int num);
 	void set(string &str);
 	void set(char *num);
@@ -94,17 +94,20 @@ public:
 	bool operator>(BigNum const &other) const;
 	bool operator>=(BigNum const &other) const;
 
-	
+	/*
 	BigNum &operator=(BigNum const &other) {
 		//len = other.len;
 		s = other.s;
 		integer = other.integer;
 		return *this;
 	}
-	
+	*/
 	BigNum subnum(int start, int end);
 
 	friend ostream &operator<<(ostream &os, BigNum const &bn);
 	friend istream &operator>>(istream &in, BigNum &bn);
 };
 
+typedef BigNum Int;
+
+#endif
