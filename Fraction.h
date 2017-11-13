@@ -87,4 +87,6 @@ public:
 	friend istream &operator>>(istream &in, Fraction &fc);
 };
 
+typedef Fraction Real;
+
 #endif

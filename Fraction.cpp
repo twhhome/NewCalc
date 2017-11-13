@@ -43,6 +43,8 @@ void Fraction::normalize()
 		num = 0;
 		den = 1;
 	}
+	if (den == 1)
+		return;
 	Int n = gcd(num, den);
 	num /= n;
 	den /= n; 

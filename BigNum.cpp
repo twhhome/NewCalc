@@ -121,6 +121,8 @@ void BigNum::set(int num)
 
 BigNum BigNum::add(BigNum const &other) const
 {
+	if (*this == 0 || other == 0)
+		return (*this == 0) ? other : *this;
 	BigNum rslt;
 	rslt.integer.clear();
 	//rslt.inte_len = 0;
@@ -241,6 +243,8 @@ BigNum BigNum::sub(BigNum const &other) const
 
 BigNum BigNum::multi(BigNum const &other) const
 {
+	if (*this == 0 || other == 0)
+		return 0;
 	BigNum rslt;
 	//rslt.inte_len = 0;
 	rslt.integer.clear();
@@ -389,6 +393,8 @@ bool BigNum::operator==(BigNum const &other) const
 {
 	if (s != other.s)
 		return false;
+	else if (s == 0 && other.s == 0)
+		return true;
 	else
 	{
 		if (integer.size() == other.integer.size())
@@ -414,6 +420,8 @@ bool BigNum::operator<(BigNum const &other) const
 {
 	if (s != other.s)
 		return (s < other.s) ? true : false;
+	else if (s == 0 && other.s == 0)
+		return false;
 	else
 	{
 		if (integer.size() != other.integer.size())
