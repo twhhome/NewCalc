@@ -1,4 +1,4 @@
-﻿生成启动时间为 2017/11/13 21:46:34。
+﻿生成启动时间为 2017/12/7 10:42:00。
      1>项目“E:\program\C++\OOP\NewCalc\NewCalc\NewCalc.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /FR"Debug\\" /Gd /TP /analyze- /errorReport:prompt BigNum.cpp
@@ -9,11 +9,26 @@
      1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(187): warning C4018: “<”: 有符号/无符号不匹配
      1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(190): warning C4018: “>=”: 有符号/无符号不匹配
      1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(192): warning C4018: “>=”: 有符号/无符号不匹配
-     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(252): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(254): warning C4018: “<”: 有符号/无符号不匹配
-     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(258): warning C4018: “>”: 有符号/无符号不匹配
-     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(298): warning C4018: “<=”: 有符号/无符号不匹配
-     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(402): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(255): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(265): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(276): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(278): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(282): warning C4018: “>”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(304): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(335): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(345): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(355): warning C4018: “<=”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(366): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(386): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(397): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(435): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(468): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(478): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(497): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(517): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(528): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(560): warning C4018: “<”: 有符号/无符号不匹配
+     1>e:\program\c++\oop\newcalc\newcalc\bignum.cpp(623): warning C4018: “<”: 有符号/无符号不匹配
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\program\C++\OOP\NewCalc\Debug\NewCalc.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\program\C++\OOP\NewCalc\Debug\NewCalc.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\program\C++\OOP\NewCalc\Debug\NewCalc.lib" /MACHINE:X86 /FORCE:MULTIPLE Debug\BigNum.obj
          Debug\calc.obj
@@ -21,17 +36,17 @@
          Debug\main.obj
      1>LINK : warning LNK4075: 忽略“/INCREMENTAL”(由于“/FORCE”规范)
      1>BigNum.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/OPT:LBR”规范)
-     1>calc.obj : warning LNK4006: "int const MAXN" (?MAXN@@3HB) 已在 BigNum.obj 中定义；已忽略第二个定义
-     1>calc.obj : warning LNK4006: "int const MAXM" (?MAXM@@3HB) 已在 BigNum.obj 中定义；已忽略第二个定义
+     1>calc.obj : warning LNK4006: "unsigned int const MAXN" (?MAXN@@3IB) 已在 BigNum.obj 中定义；已忽略第二个定义
+     1>calc.obj : warning LNK4006: "unsigned int const MAXM" (?MAXM@@3IB) 已在 BigNum.obj 中定义；已忽略第二个定义
      1>calc.obj : warning LNK4006: "int const bit" (?bit@@3HB) 已在 BigNum.obj 中定义；已忽略第二个定义
-     1>Fraction.obj : warning LNK4006: "int const MAXN" (?MAXN@@3HB) 已在 BigNum.obj 中定义；已忽略第二个定义
-     1>Fraction.obj : warning LNK4006: "int const MAXM" (?MAXM@@3HB) 已在 BigNum.obj 中定义；已忽略第二个定义
+     1>Fraction.obj : warning LNK4006: "unsigned int const MAXN" (?MAXN@@3IB) 已在 BigNum.obj 中定义；已忽略第二个定义
+     1>Fraction.obj : warning LNK4006: "unsigned int const MAXM" (?MAXM@@3IB) 已在 BigNum.obj 中定义；已忽略第二个定义
      1>Fraction.obj : warning LNK4006: "int const bit" (?bit@@3HB) 已在 BigNum.obj 中定义；已忽略第二个定义
      1>main.obj : warning LNK4006: "class Fraction __cdecl Calc(int,int)" (?Calc@@YA?AVFraction@@HH@Z) 已在 calc.obj 中定义；已忽略第二个定义
      1>main.obj : warning LNK4006: "int __cdecl Input(void)" (?Input@@YAHXZ) 已在 calc.obj 中定义；已忽略第二个定义
      1>main.obj : warning LNK4006: "void __cdecl Output(class Fraction const &)" (?Output@@YAXABVFraction@@@Z) 已在 calc.obj 中定义；已忽略第二个定义
-     1>main.obj : warning LNK4006: "int const MAXN" (?MAXN@@3HB) 已在 BigNum.obj 中定义；已忽略第二个定义
-     1>main.obj : warning LNK4006: "int const MAXM" (?MAXM@@3HB) 已在 BigNum.obj 中定义；已忽略第二个定义
+     1>main.obj : warning LNK4006: "unsigned int const MAXN" (?MAXN@@3IB) 已在 BigNum.obj 中定义；已忽略第二个定义
+     1>main.obj : warning LNK4006: "unsigned int const MAXM" (?MAXM@@3IB) 已在 BigNum.obj 中定义；已忽略第二个定义
      1>main.obj : warning LNK4006: "int const bit" (?bit@@3HB) 已在 BigNum.obj 中定义；已忽略第二个定义
      1>main.obj : warning LNK4006: "int t" (?t@@3HA) 已在 calc.obj 中定义；已忽略第二个定义
      1>main.obj : warning LNK4006: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > str" (?str@@3V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@A) 已在 calc.obj 中定义；已忽略第二个定义
@@ -43,4 +58,4 @@
 
 生成成功。
 
-已用时间 00:00:01.36
+已用时间 00:00:01.43

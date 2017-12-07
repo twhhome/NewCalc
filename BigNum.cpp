@@ -1,7 +1,7 @@
 #include "BigNum.h"
 
-extern const int MAXN;
-extern const int MAXM;
+extern const size_t MAXN;
+extern const size_t MAXM;
 extern const int bit;
 
 string strexczero(string &str) // wipe off zeros in front of the str
@@ -245,46 +245,84 @@ BigNum BigNum::multi(BigNum const &other) const
 {
 	if (*this == 0 || other == 0)
 		return 0;
-	BigNum rslt;
+	BigNum rslt, rslt_tmp;
 	//rslt.inte_len = 0;
 	rslt.integer.clear();
-	//int maxipj = -1; //the maximum of i plus j
-	for (int i = 0; i < other.integer.size(); i++)
+	rslt_tmp.integer.clear();
+	BigNum this_tmp, other_tmp;
+	this_tmp.integer.clear();
+	other_tmp.integer.clear();
+	for (int i = 0; i < this->integer.size(); i++)
 	{
-		for (int j = 0; j < integer.size(); j++)
+		int tmp_num;
+		tmp_num = this->integer[i];
+		while (tmp_num != 0)
 		{
-			int curr;
-			curr = other.integer[i] * integer[j];
-			if (i + j > rslt.integer.size() - 1 || rslt.integer.empty())
-			{
-				//maxipj = i + j;
-				rslt.integer.push_back(0);
-				//rslt.integer[i + j] = 0;
-			}
-			rslt.integer[i + j] += curr;
+			this_tmp.integer.push_back(tmp_num % 10);
+			tmp_num /= 10;
 		}
 	}
-	int len = rslt.integer.size();
+	for (int i = 0; i < other.integer.size(); i++)
+	{
+		int tmp_num;
+		tmp_num = other.integer[i];
+		while (tmp_num != 0)
+		{
+			other_tmp.integer.push_back(tmp_num % 10);
+			tmp_num /= 10;
+		}
+	}
+	//int maxipj = -1; //the maximum of i plus j
+	for (int i = 0; i < other_tmp.integer.size(); i++)
+	{
+		for (int j = 0; j < this_tmp.integer.size(); j++)
+		{
+			int curr;
+			curr = other_tmp.integer[i] * this_tmp.integer[j];
+			if (i + j > rslt_tmp.integer.size() - 1 || rslt_tmp.integer.empty())
+			{
+				//maxipj = i + j;
+				rslt_tmp.integer.push_back(0);
+				//rslt.integer[i + j] = 0;
+			}
+			rslt_tmp.integer[i + j] += curr;
+		}
+	}
+	int len = rslt_tmp.integer.size();
 	for (int i = 0; i <= len - 1; i++)
 	{
-		int curr = rslt.integer[i];
-		rslt.integer[i] = curr % MAXM;
-		if (i == rslt.integer.size() - 1)
-			rslt.integer.push_back(0);
+		int curr = rslt_tmp.integer[i];
+		rslt_tmp.integer[i] = curr % 10;
+		if (i == rslt_tmp.integer.size() - 1)
+			rslt_tmp.integer.push_back(0);
 			//rslt.integer[i + 1] = 0;
-		rslt.integer[i + 1] += curr / MAXM;
+		rslt_tmp.integer[i + 1] += curr / 10;
 	}
-	if (rslt.integer[rslt.integer.size() - 1] == 0)
-		rslt.integer.pop_back();
+	if (rslt_tmp.integer[rslt_tmp.integer.size() - 1] == 0)
+		rslt_tmp.integer.pop_back();
+	int tmp_num = 0;
+	for (int i = 0; i < rslt_tmp.integer.size(); i++)
+	{
+		tmp_num += rslt_tmp.integer[i] * my_pow(i % bit);
+		if ((i + 1) % bit == 0)
+		{
+			rslt.integer.push_back(tmp_num);
+			tmp_num = 0;
+		}
+	}
+	if (tmp_num != 0)
+		rslt.integer.push_back(tmp_num);
 	rslt.s = s * other.s;
 	return rslt;
 }
 
 BigNum BigNum::div(BigNum &other) const
 {
-	BigNum rslt, tmp, tmp2;
+	BigNum rslt, rslt_tmp, tmp_this, tmp_other, tmp2;
 	rslt.integer.clear();
-	tmp.integer.clear();
+	rslt_tmp.integer.clear();
+	tmp_this.integer.clear();
+	tmp_other.integer.clear();
 	tmp2.integer.clear();
 	bool book = false; // whether other is smaller than 0
 	bool not_zero = false; // whether the first number is zero
@@ -294,55 +332,119 @@ BigNum BigNum::div(BigNum &other) const
 		other.s = -other.s;
 		book = true;
 	}
-	//rslt.inte_len = inte_len - other.inte_len + 1;
-	for (int i = 1; i <= integer.size() - other.integer.size() + 1; i++)
-		rslt.integer.push_back(0);
-	tmp = *this;
-	tmp.s = 1;
-	for (int i = rslt.integer.size() - 1; i >= 0; i--)
+	for (int i = 0; i < this->integer.size(); i++)
 	{
-		for (int j = 1; j <= MAXM; j++)
+		int tmp_num;
+		tmp_num = this->integer[i];
+		while (tmp_num != 0)
 		{
-			if (other * j > tmp.subnum(i, tmp.integer.size() - 1))
+			tmp_this.integer.push_back(tmp_num % 10);
+			tmp_num /= 10;
+		}
+	}
+	for (int i = 0; i < other.integer.size(); i++)
+	{
+		int tmp_num;
+		tmp_num = other.integer[i];
+		while (tmp_num != 0)
+		{
+			tmp_other.integer.push_back(tmp_num % 10);
+			tmp_num /= 10;
+		}
+	}
+	for (int i = 1; i <= tmp_this.integer.size() - tmp_other.integer.size() + 1; i++)
+		rslt_tmp.integer.push_back(0);
+	tmp_this.s = 1;
+	for (int i = rslt_tmp.integer.size() - 1; i >= 0; i--)
+	{
+		for (int j = 1; j <= 10; j++)
+		{
+			BigNum tmp3, tmp4;
+			tmp3 = other * j;
+			tmp4.integer.clear();
+			tmp4.s = 1;
+			for (int k = 0; k < tmp3.integer.size(); k++)
+			{
+				int tmp_num;
+				tmp_num = tmp3.integer[k];
+				while (tmp_num != 0)
+				{
+					tmp4.integer.push_back(tmp_num % 10);
+					tmp_num /= 10;
+				}
+			}
+			if (tmp4 > tmp_this.subnum(i, tmp_this.integer.size() - 1))
 			{
 				if (j == 1 && not_zero == false)
-					rslt.integer.pop_back();
+					rslt_tmp.integer.pop_back();
 				else
 				{
 					not_zero = true;
-					rslt.integer[i] = j - 1;
-					tmp2 = other * (j - 1);
-					/*
-					tmp2.inte_len += i;
-					for (int k = tmp2.inte_len - 1; k >= 0; k--)
-						tmp2.integer[k] = ((k - i) >= 0) ? tmp2.integer[k - i] : 0;
-					*/
-					int len = tmp2.integer.size();
-					for (int k = 0; k < i; k++)
+					rslt_tmp.integer[i] = j - 1;
+					tmp3 = other * (j - 1);
+					tmp4.integer.clear();
+					for (int k = 0; k < tmp3.integer.size(); k++)
 					{
-						for (int l = len - 1; l >= 0; l--)
+						int tmp_num;
+						tmp_num = tmp3.integer[k];
+						while (tmp_num != 0)
 						{
-							if (l == len - 1)
-							{
-								tmp2.integer.push_back(tmp2.integer[tmp2.integer.size() - 1]);
-								tmp2.integer[tmp2.integer.size() - 2] = 0;
-							}
-							else
-							{
-								tmp2.integer[l + k + 1] = tmp2.integer[l + k];
-								tmp2.integer[l + k] = 0;
-							}
+							tmp4.integer.push_back(tmp_num % 10);
+							tmp_num /= 10;
 						}
 					}
-					tmp -= tmp2;
+					bool flag = false;
+					for (int k = 0; k < tmp4.integer.size(); k++)
+					{
+						int tmp_num;
+						tmp_num = tmp_this.integer[k + i] - tmp4.integer[k];
+						if (flag == true)
+						{
+							tmp_num -= 1;
+							flag = false;
+						}
+						if (tmp_num < 0)
+						{
+							tmp_num = 10 + tmp_num;
+							flag = true;
+						}
+						tmp_this.integer[k + i] = tmp_num;
+					}
+					for (int k = tmp_this.integer.size() - 1; k >= 0; k--)
+					{
+						if (tmp_this.integer[k] != 0)
+							break;
+						tmp_this.integer.pop_back();
+					}
 				}
 				break;
 			}
 		}
 	}
-	if (integer.size() < other.integer.size())
+	for (int i = rslt_tmp.integer.size() - 1; i >= 0; i--)
+	{
+		if (rslt_tmp.integer[i] != 0)
+			break;
+		rslt_tmp.integer.pop_back();
+	}
+	if (rslt_tmp.integer.empty())
 		rslt = 0;
-	else if (rslt.integer.size() == 0)
+	else
+	{
+		int tmp_num = 0;
+		for (int i = 0; i < rslt_tmp.integer.size(); i++)
+		{
+			tmp_num += rslt_tmp.integer[i] * my_pow(i % bit);
+			if ((i + 1) % bit == 0)
+			{
+				rslt.integer.push_back(tmp_num);
+				tmp_num = 0;
+			}
+		}
+		if (tmp_num != 0)
+			rslt.integer.push_back(tmp_num);
+	}
+	if (integer.size() < other.integer.size())
 		rslt = 0;
 	if (book) // if other is smaller than 0, then recover it
 		other.s = -other.s;
@@ -351,7 +453,126 @@ BigNum BigNum::div(BigNum &other) const
 
 BigNum BigNum::mod(BigNum &other) const
 {
-	return *this - *this / other * other;
+	BigNum rslt, tmp_this, tmp_other, tmp2;
+	rslt.integer.clear();
+	tmp_this.integer.clear();
+	tmp_other.integer.clear();
+	tmp2.integer.clear();
+	bool book = false; // whether other is smaller than 0
+	bool not_zero = false; // whether the first number is zero
+	if (other.s < 0)
+	{
+		other.s = -other.s;
+		book = true;
+	}
+	for (int i = 0; i < this->integer.size(); i++)
+	{
+		int tmp_num;
+		tmp_num = this->integer[i];
+		while (tmp_num != 0)
+		{
+			tmp_this.integer.push_back(tmp_num % 10);
+			tmp_num /= 10;
+		}
+	}
+	for (int i = 0; i < other.integer.size(); i++)
+	{
+		int tmp_num;
+		tmp_num = other.integer[i];
+		while (tmp_num != 0)
+		{
+			tmp_other.integer.push_back(tmp_num % 10);
+			tmp_num /= 10;
+		}
+	}
+	tmp_this.s = 1;
+	for (int i = tmp_this.integer.size() - tmp_other.integer.size(); i >= 0; i--)
+	{
+		for (int j = 1; j <= 10; j++)
+		{
+			BigNum tmp3, tmp4;
+			tmp3 = other * j;
+			tmp4.integer.clear();
+			tmp4.s = 1;
+			for (int k = 0; k < tmp3.integer.size(); k++)
+			{
+				int tmp_num;
+				tmp_num = tmp3.integer[k];
+				while (tmp_num != 0)
+				{
+					tmp4.integer.push_back(tmp_num % 10);
+					tmp_num /= 10;
+				}
+			}
+			if (tmp4 > tmp_this.subnum(i, tmp_this.integer.size() - 1))
+			{
+				if (j == 1 && not_zero == false)
+					break;
+					//rslt_tmp.integer.pop_back();
+				else
+				{
+					not_zero = true;
+					tmp3 = other * (j - 1);
+					tmp4.integer.clear();
+					for (int k = 0; k < tmp3.integer.size(); k++)
+					{
+						int tmp_num;
+						tmp_num = tmp3.integer[k];
+						while (tmp_num != 0)
+						{
+							tmp4.integer.push_back(tmp_num % 10);
+							tmp_num /= 10;
+						}
+					}
+					bool flag = false;
+					for (int k = 0; k < tmp4.integer.size(); k++)
+					{
+						int tmp_num;
+						tmp_num = tmp_this.integer[k + i] - tmp4.integer[k];
+						if (flag == true)
+						{
+							tmp_num -= 1;
+							flag = false;
+						}
+						if (tmp_num < 0)
+						{
+							tmp_num = 10 + tmp_num;
+							flag = true;
+						}
+						tmp_this.integer[k + i] = tmp_num;
+					}
+					for (int k = tmp_this.integer.size() - 1; k >= 0; k--)
+					{
+						if (tmp_this.integer[k] != 0)
+							break;
+						tmp_this.integer.pop_back();
+					}
+				}
+				break;
+			}
+		}
+	}
+	if (tmp_this.integer.empty())
+		rslt = 0;
+	else
+	{
+		int tmp_num = 0;
+		for (int i = 0; i < tmp_this.integer.size(); i++)
+		{
+			tmp_num += tmp_this.integer[i] * my_pow(i % bit);
+			if ((i + 1) % bit == 0)
+			{
+				rslt.integer.push_back(tmp_num);
+				tmp_num = 0;
+			}
+		}
+		if (tmp_num != 0)
+			rslt.integer.push_back(tmp_num);
+		rslt.s = 1;
+	}
+	if (book) // if other is smaller than 0, then recover it
+		other.s = -other.s;
+	return rslt;
 }
 
 BigNum BigNum::operator+(int const &n) const

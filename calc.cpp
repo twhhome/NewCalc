@@ -13,16 +13,16 @@ int Input() // input of the expression
 	return 1;
 }
 
-Real Calc(int s, int e)
+Rational Calc(int s, int e)
 {
-	Real ans = 0;
-	Real rslt_md; // result of multi and div
+	Rational ans = 0;
+	Rational rslt_md; // result of multi and div
 	int start = -1, end = -1; // the start and end of substr 
 	char last1 = '+'; // the last symbol of +, -
 	char last2 = NULL; // the last symbol of *, /
 	stack<int> brackets;
 	bool if_bracket = false; // whether have brackets
-	Real bracket;
+	Rational bracket;
 	for (int i = s; i <= e; i++)
 	{
 		if (str[i] == '(' || str[i] == ')')
@@ -50,7 +50,7 @@ Real Calc(int s, int e)
 		}
 		else if (i != e && (str[i] < '0' || str[i] > '9')) // not a number && i is not the end of the string
 		{
-			Real num;
+			Rational num;
 			if (if_bracket)
 			{
 				num = bracket;
@@ -107,7 +107,7 @@ Real Calc(int s, int e)
 		}
 		else if (i == e) // end of the string
 		{
-			Real num;
+			Rational num;
 			if (str[i] == ')')
 			{
 				num = bracket;
@@ -144,7 +144,7 @@ Real Calc(int s, int e)
 	return ans;
 }
 
-void Output(Real const &bn)
+void Output(Rational const &bn)
 {
 	cout << "Out[" << t << "]=";
 	cout << bn << endl;
