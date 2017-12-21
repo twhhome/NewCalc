@@ -31,20 +31,20 @@ private:
 
 public:
 	BigNum() { set(0); }
-	BigNum(string str) { set(str); }
-	BigNum(char *num) { set(num); }
-	BigNum(int num) { set(num); }
+	BigNum(const string str) { set(str); }
+	BigNum(const char *num) { set(num); }
+	BigNum(const int num) { set(num); }
 	BigNum(BigNum const &src);
 
-	void set(int num);
-	void set(string &str);
-	void set(char *num);
+	void set(const int num);
+	void set(const string &str);
+	void set(const char *num);
 
 	BigNum add(BigNum const &other) const;
 	BigNum sub(BigNum const &other) const;
 	BigNum multi(BigNum const &other) const;
-	BigNum div(BigNum &other) const;
-	BigNum mod(BigNum &other) const;
+	BigNum div(BigNum const &other) const;
+	BigNum mod(BigNum const &other) const;
 
 	BigNum operator+(BigNum const &other) const { return add(other); }
 	BigNum operator+(int const &n) const;
@@ -52,9 +52,9 @@ public:
 	BigNum operator-(int const &n) const;
 	BigNum operator*(BigNum const &other) const { return multi(other); }
 	BigNum operator*(int const &n) const;
-	BigNum operator/(BigNum &other) const { return div(other); }
+	BigNum operator/(BigNum const &other) const { return div(other); }
 	BigNum operator/(int const &n) const;
-	BigNum operator%(BigNum &other) const { return mod(other); }
+	BigNum operator%(BigNum const &other) const { return mod(other); }
 	BigNum operator%(int const &n) const;
 
 	void operator+=(BigNum const &other) { *this = *this + other; }
@@ -63,7 +63,7 @@ public:
 	void operator-=(int const &n) { *this = *this - n; }
 	void operator*=(BigNum const &other) { *this = *this * other; }
 	void operator*=(int const &n) { *this = *this * n; }
-	void operator/=(BigNum &other) { *this = *this / other; }
+	void operator/=(BigNum const &other) { *this = *this / other; }
 	void operator/=(int const &n) { *this = *this / n; }
 
 	BigNum& operator++() {
@@ -92,7 +92,7 @@ public:
 	bool operator>(BigNum const &other) const;
 	bool operator>=(BigNum const &other) const;
 
-	BigNum subnum(int start, int end);
+	BigNum subnum(int start, int end) const;
 
 	friend ostream &operator<<(ostream &os, BigNum const &bn);
 	friend istream &operator>>(istream &in, BigNum &bn);

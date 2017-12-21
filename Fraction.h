@@ -14,18 +14,18 @@ private:
 
 public:
 	Fraction() { num = 0; den = 1; }
-	Fraction(int n) { num = n; den = 1; }
-	Fraction(int n, int d) { set(n, d); }
-	Fraction(Int &n) { num = n; den = 1; }
-	Fraction(Int const &n, Int const &d) { set(n, d); }
-	Fraction(char *str) { set(str); }
-	Fraction(string const &str) { set(str); }
-	Fraction(Fraction const &src) { num = src.num; den = src.den; }
+	Fraction(const int n) { num = n; den = 1; }
+	Fraction(const int n, const int d) { set(n, d); }
+	Fraction(const Int &n) { num = n; den = 1; }
+	Fraction(const Int &n, const Int &d) { set(n, d); }
+	Fraction(const char *str) { set(str); }
+	Fraction(const string &str) { set(str); }
+	Fraction(const Fraction &src) { num = src.num; den = src.den; }
 
-	void set(int n, int d);
-	void set(Int const &n, Int const &d);
-	void set(char *str);
-	void set(string const &str);
+	void set(const int n, const int d);
+	void set(const Int &n, const Int &d);
+	void set(const char *str);
+	void set(const string &str);
 
 	Int get_num() const { return num; }
 	Int get_den() const { return den; }

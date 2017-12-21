@@ -1,6 +1,6 @@
 #include "Fraction.h"
 
-void Fraction::set(int n, int d)
+void Fraction::set(const int n, const int d)
 {
 	num = n;
 	den = d;
@@ -14,14 +14,14 @@ void Fraction::set(Int const &n, Int const &d)
 	normalize();
 }
 
-void Fraction::set(char *str)
+void Fraction::set(const char *str)
 {
 	string temp;
 	temp.assign(str);
 	set(temp);
 }
 
-void Fraction::set(string const &str)
+void Fraction::set(const string &str)
 {
 	num = 0;
 	den = 1;

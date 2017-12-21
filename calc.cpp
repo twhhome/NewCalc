@@ -59,8 +59,13 @@ Rational Calc(int s, int e)
 			else
 			{
 				end = i - 1;
-				string sub_str = str.substr(start, end - start + 1);
-				num = sub_str; // the current number
+				if (start == -1)
+					num = 0;
+				else
+				{
+					string sub_str = str.substr(start, end - start + 1);
+					num = sub_str; // the current number
+				}
 			}
 			// judge the symbol
 			if (str[i] == '+' || str[i] == '-')

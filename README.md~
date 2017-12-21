@@ -8,4 +8,4 @@ The BigNum class, also named as Integer, is the main class of the whole program.
 ### Fraction Class
 The Fraction class, also named as Rational, is an extension of the BigNum class. It contains two BigNum classes to represent member and denominator. A little different from the BigNum class, it doesn't support % operator.
 ### Error Class
-The Error class is a class which contains the error type of the expression. But now it still need to be midified. 
+The Error class is a class which contains the error type of the expression. 
