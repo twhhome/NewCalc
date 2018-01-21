@@ -76,6 +76,8 @@ Rational Calc(int s, int e)
 					rslt_md *= num;
 					break;
 				case '/':
+					if (num == 0)
+						throw Error(DIVIDED_BY_ZERO, i);
 					rslt_md /= num;
 					break;
 				}
@@ -99,6 +101,8 @@ Rational Calc(int s, int e)
 					rslt_md *= num;
 					break;
 				case '/':
+					if (num == 0)
+						throw Error(DIVIDED_BY_ZERO, i);
 					rslt_md /= num;
 					break;
 				case NULL:
@@ -132,6 +136,8 @@ Rational Calc(int s, int e)
 				rslt_md *= num;
 				break;
 			case '/':
+				if (num == 0)
+					throw Error(DIVIDED_BY_ZERO, i);
 				rslt_md /= num;
 				break;
 			}
@@ -153,4 +159,25 @@ void Output(Rational const &bn)
 {
 	cout << "Out[" << t << "]=";
 	cout << bn << endl;
+}
+
+void Output(Error const &error)
+{
+	cout << "Out[" << t << "]=";
+	cout << error << endl;
+	int count = 6;
+	int tmp_t = t;
+	while (tmp_t != 0)
+	{
+		count++;
+		tmp_t /= 10;
+	}
+	for (int i = 1; i <= count; i++)
+		cout << " ";
+	cout << str << endl;
+	for (int i = 1; i <= count; i++)
+		cout << " ";
+	for (int i = 0; i < error.get_pos(); i++)
+		cout << " ";
+	cout << "^" << endl;
 }

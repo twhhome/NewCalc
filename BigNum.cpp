@@ -1,7 +1,7 @@
 #include "BigNum.h"
 
-extern const size_t MAXN;
-extern const size_t MAXM;
+extern const int MAXN;
+extern const int MAXM;
 extern const int bit;
 
 string strexczero(const string &str) // wipe off zeros in front of the str
@@ -9,7 +9,7 @@ string strexczero(const string &str) // wipe off zeros in front of the str
 	string rslt;
 	int flag = 0;
 	int book = 0;
-	for (size_t i = 0; i < str.length(); i++)
+	for (int i = 0; i < str.length(); i++)
 	{
 		if (i == 0 && str[i] == '-')
 		{
@@ -77,7 +77,7 @@ void BigNum::set(const string &str)
 	else
 		s = 1;
 	integer.clear();
-	for (size_t i = tmp.length() - 1; i >= 0; i--)
+	for (int i = tmp.length() - 1; i >= 0; i--)
 	{
 		if ((tmp.length() - i - 1) % bit == bit - 1)
 			integer.push_back(string_to_int(tmp, i, i + bit - 1));
@@ -122,7 +122,7 @@ BigNum BigNum::add(BigNum const &other) const
 	if (s >= 0 && other.s >= 0)
 	{
 		rslt.s = 1;
-		for (size_t i = 0; i < integer.size() || i < other.integer.size(); i++)
+		for (int i = 0; i < integer.size() || i < other.integer.size(); i++)
 		{
 			int curr;
 			if (i >= integer.size())
@@ -175,7 +175,7 @@ BigNum BigNum::sub(BigNum const &other) const
 		{
 			rslt.s = 1;
 			rslt.integer.push_back(0);
-			for (size_t i = 0; i < integer.size() || i < other.integer.size(); i++)
+			for (int i = 0; i < integer.size() || i < other.integer.size(); i++)
 			{
 				int curr;
 				if (i >= integer.size())
@@ -188,7 +188,7 @@ BigNum BigNum::sub(BigNum const &other) const
 				rslt.integer[rslt.integer.size() - 1] = (curr < 0) ? MAXM + curr : curr;
 				rslt.integer.push_back((curr < 0) ? -1 : 0);
 			}
-			for (size_t i = rslt.integer.size() - 1; i >= 0; i--)
+			for (int i = rslt.integer.size() - 1; i >= 0; i--)
 			{
 				if (rslt.integer[i] != 0)
 					break;
@@ -242,7 +242,7 @@ BigNum BigNum::multi(BigNum const &other) const
 	BigNum this_tmp, other_tmp;
 	this_tmp.integer.clear();
 	other_tmp.integer.clear();
-	for (size_t i = 0; i < this->integer.size(); i++)
+	for (int i = 0; i < this->integer.size(); i++)
 	{
 		int tmp_num;
 		tmp_num = this->integer[i];
@@ -252,7 +252,7 @@ BigNum BigNum::multi(BigNum const &other) const
 			tmp_num /= 10;
 		}
 	}
-	for (size_t i = 0; i < other.integer.size(); i++)
+	for (int i = 0; i < other.integer.size(); i++)
 	{
 		int tmp_num;
 		tmp_num = other.integer[i];
@@ -262,9 +262,9 @@ BigNum BigNum::multi(BigNum const &other) const
 			tmp_num /= 10;
 		}
 	}
-	for (size_t i = 0; i < other_tmp.integer.size(); i++)
+	for (int i = 0; i < other_tmp.integer.size(); i++)
 	{
-		for (size_t j = 0; j < this_tmp.integer.size(); j++)
+		for (int j = 0; j < this_tmp.integer.size(); j++)
 		{
 			int curr;
 			curr = other_tmp.integer[i] * this_tmp.integer[j];
@@ -275,8 +275,8 @@ BigNum BigNum::multi(BigNum const &other) const
 			rslt_tmp.integer[i + j] += curr;
 		}
 	}
-	size_t len = rslt_tmp.integer.size();
-	for (size_t i = 0; i <= len - 1; i++)
+	int len = rslt_tmp.integer.size();
+	for (int i = 0; i <= len - 1; i++)
 	{
 		int curr = rslt_tmp.integer[i];
 		rslt_tmp.integer[i] = curr % 10;
@@ -287,7 +287,7 @@ BigNum BigNum::multi(BigNum const &other) const
 	if (rslt_tmp.integer[rslt_tmp.integer.size() - 1] == 0)
 		rslt_tmp.integer.pop_back();
 	int tmp_num = 0;
-	for (size_t i = 0; i < rslt_tmp.integer.size(); i++)
+	for (int i = 0; i < rslt_tmp.integer.size(); i++)
 	{
 		tmp_num += rslt_tmp.integer[i] * my_pow(i % bit);
 		if ((i + 1) % bit == 0)
@@ -318,7 +318,7 @@ BigNum BigNum::div(BigNum const &other) const
 		const_cast<BigNum&>(other).s = -other.s;
 		book = true;
 	}
-	for (size_t i = 0; i < this->integer.size(); i++)
+	for (int i = 0; i < this->integer.size(); i++)
 	{
 		int tmp_num;
 		tmp_num = this->integer[i];
@@ -328,7 +328,7 @@ BigNum BigNum::div(BigNum const &other) const
 			tmp_num /= 10;
 		}
 	}
-	for (size_t i = 0; i < other.integer.size(); i++)
+	for (int i = 0; i < other.integer.size(); i++)
 	{
 		int tmp_num;
 		tmp_num = other.integer[i];
@@ -338,10 +338,10 @@ BigNum BigNum::div(BigNum const &other) const
 			tmp_num /= 10;
 		}
 	}
-	for (size_t i = 1; i <= tmp_this.integer.size() - tmp_other.integer.size() + 1; i++)
+	for (int i = 1; i <= tmp_this.integer.size() - tmp_other.integer.size() + 1; i++)
 		rslt_tmp.integer.push_back(0);
 	tmp_this.s = 1;
-	for (size_t i = rslt_tmp.integer.size() - 1; i >= 0; i--)
+	for (int i = rslt_tmp.integer.size() - 1; i >= 0; i--)
 	{
 		for (int j = 1; j <= 10; j++)
 		{
@@ -349,7 +349,7 @@ BigNum BigNum::div(BigNum const &other) const
 			tmp3 = other * j;
 			tmp4.integer.clear();
 			tmp4.s = 1;
-			for (size_t k = 0; k < tmp3.integer.size(); k++)
+			for (int k = 0; k < tmp3.integer.size(); k++)
 			{
 				int tmp_num;
 				tmp_num = tmp3.integer[k];
@@ -369,7 +369,7 @@ BigNum BigNum::div(BigNum const &other) const
 					rslt_tmp.integer[i] = j - 1;
 					tmp3 = other * (j - 1);
 					tmp4.integer.clear();
-					for (size_t k = 0; k < tmp3.integer.size(); k++)
+					for (int k = 0; k < tmp3.integer.size(); k++)
 					{
 						int tmp_num;
 						tmp_num = tmp3.integer[k];
@@ -380,7 +380,7 @@ BigNum BigNum::div(BigNum const &other) const
 						}
 					}
 					bool flag = false;
-					for (size_t k = 0; k < tmp4.integer.size(); k++)
+					for (int k = 0; k < tmp4.integer.size(); k++)
 					{
 						int tmp_num;
 						tmp_num = tmp_this.integer[k + i] - tmp4.integer[k];
@@ -396,7 +396,7 @@ BigNum BigNum::div(BigNum const &other) const
 						}
 						tmp_this.integer[k + i] = tmp_num;
 					}
-					for (size_t k = tmp_this.integer.size() - 1; k >= 0; k--)
+					for (int k = tmp_this.integer.size() - 1; k >= 0; k--)
 					{
 						if (tmp_this.integer[k] != 0)
 							break;
@@ -407,7 +407,7 @@ BigNum BigNum::div(BigNum const &other) const
 			}
 		}
 	}
-	for (size_t i = rslt_tmp.integer.size() - 1; i >= 0; i--)
+	for (int i = rslt_tmp.integer.size() - 1; i >= 0; i--)
 	{
 		if (rslt_tmp.integer[i] != 0)
 			break;
@@ -418,7 +418,7 @@ BigNum BigNum::div(BigNum const &other) const
 	else
 	{
 		int tmp_num = 0;
-		for (size_t i = 0; i < rslt_tmp.integer.size(); i++)
+		for (int i = 0; i < rslt_tmp.integer.size(); i++)
 		{
 			tmp_num += rslt_tmp.integer[i] * my_pow(i % bit);
 			if ((i + 1) % bit == 0)
@@ -451,7 +451,7 @@ BigNum BigNum::mod(BigNum const &other) const
 		const_cast<BigNum&>(other).s = -other.s;
 		book = true;
 	}
-	for (size_t i = 0; i < this->integer.size(); i++)
+	for (int i = 0; i < this->integer.size(); i++)
 	{
 		int tmp_num;
 		tmp_num = this->integer[i];
@@ -461,7 +461,7 @@ BigNum BigNum::mod(BigNum const &other) const
 			tmp_num /= 10;
 		}
 	}
-	for (size_t i = 0; i < other.integer.size(); i++)
+	for (int i = 0; i < other.integer.size(); i++)
 	{
 		int tmp_num;
 		tmp_num = other.integer[i];
@@ -472,7 +472,7 @@ BigNum BigNum::mod(BigNum const &other) const
 		}
 	}
 	tmp_this.s = 1;
-	for (size_t i = tmp_this.integer.size() - tmp_other.integer.size(); i >= 0; i--)
+	for (int i = tmp_this.integer.size() - tmp_other.integer.size(); i >= 0; i--)
 	{
 		for (int j = 1; j <= 10; j++)
 		{
@@ -480,7 +480,7 @@ BigNum BigNum::mod(BigNum const &other) const
 			tmp3 = other * j;
 			tmp4.integer.clear();
 			tmp4.s = 1;
-			for (size_t k = 0; k < tmp3.integer.size(); k++)
+			for (int k = 0; k < tmp3.integer.size(); k++)
 			{
 				int tmp_num;
 				tmp_num = tmp3.integer[k];
@@ -499,7 +499,7 @@ BigNum BigNum::mod(BigNum const &other) const
 					not_zero = true;
 					tmp3 = other * (j - 1);
 					tmp4.integer.clear();
-					for (size_t k = 0; k < tmp3.integer.size(); k++)
+					for (int k = 0; k < tmp3.integer.size(); k++)
 					{
 						int tmp_num;
 						tmp_num = tmp3.integer[k];
@@ -510,7 +510,7 @@ BigNum BigNum::mod(BigNum const &other) const
 						}
 					}
 					bool flag = false;
-					for (size_t k = 0; k < tmp4.integer.size(); k++)
+					for (int k = 0; k < tmp4.integer.size(); k++)
 					{
 						int tmp_num;
 						tmp_num = tmp_this.integer[k + i] - tmp4.integer[k];
@@ -526,7 +526,7 @@ BigNum BigNum::mod(BigNum const &other) const
 						}
 						tmp_this.integer[k + i] = tmp_num;
 					}
-					for (size_t k = tmp_this.integer.size() - 1; k >= 0; k--)
+					for (int k = tmp_this.integer.size() - 1; k >= 0; k--)
 					{
 						if (tmp_this.integer[k] != 0)
 							break;
@@ -542,7 +542,7 @@ BigNum BigNum::mod(BigNum const &other) const
 	else
 	{
 		int tmp_num = 0;
-		for (size_t i = 0; i < tmp_this.integer.size(); i++)
+		for (int i = 0; i < tmp_this.integer.size(); i++)
 		{
 			tmp_num += tmp_this.integer[i] * my_pow(i % bit);
 			if ((i + 1) % bit == 0)
@@ -605,7 +605,7 @@ bool BigNum::operator==(BigNum const &other) const
 	{
 		if (integer.size() == other.integer.size())
 		{
-			for (size_t i = 0; i < integer.size(); i++)
+			for (int i = 0; i < integer.size(); i++)
 			{
 				if (integer[i] != other.integer[i])
 					return false;
@@ -634,7 +634,7 @@ bool BigNum::operator<(BigNum const &other) const
 			return (integer.size() < other.integer.size()) ? true : false;
 		else
 		{
-			for (size_t i = integer.size() - 1; i >= 0; i--)
+			for (int i = integer.size() - 1; i >= 0; i--)
 			{
 				if (integer[i] != other.integer[i])
 					return (integer[i] < other.integer[i]) ? true : false;
@@ -676,7 +676,7 @@ ostream &operator<<(ostream &os, BigNum const &bn)
 {
 	if (bn.s == (-1))
 		os << "-";
-	for (size_t i = bn.integer.size() - 1; i >= 0; i--)
+	for (int i = bn.integer.size() - 1; i >= 0; i--)
 	{
 		if (i != bn.integer.size() - 1)
 			os << setw(bit) << setfill('0') << bn.integer[i];

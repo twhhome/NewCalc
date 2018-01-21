@@ -13,11 +13,12 @@ then integer[0] = 7890, integer[1] = 3456, integer[2] = 12
 #include<stack>
 #include<iomanip>
 #include<vector>
+#include "Error.h"
 using namespace std;
 
 #pragma once
-extern const size_t MAXN = 250; // the max number of the elements of the array
-extern const size_t MAXM = 1000000000; // the max number of the elements in the array
+extern const int MAXN = 250; // the max number of the elements of the array
+extern const int MAXM = 1000000000; // the max number of the elements in the array
 extern const int bit = 9;
 /*if the max num which BigNum can store is 1000, 
 then MAXN = 250, and each element in the array is 

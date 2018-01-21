@@ -83,11 +83,13 @@
   <ItemGroup>
     <ClCompile Include="BigNum.cpp" />
     <ClCompile Include="calc.cpp" />
+    <ClCompile Include="Error.cpp" />
     <ClCompile Include="Fraction.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigNum.h" />
+    <ClInclude Include="Error.h" />
     <ClInclude Include="Fraction.h" />
   </ItemGroup>
   <ItemGroup>
