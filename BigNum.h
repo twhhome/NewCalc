@@ -32,14 +32,15 @@ private:
 
 public:
 	BigNum() { set(0); }
-	BigNum(const string str) { set(str); }
+	BigNum(const string &str) { set(str); }
 	BigNum(const char *num) { set(num); }
 	BigNum(const int num) { set(num); }
-	BigNum(BigNum const &src);
+	BigNum(const BigNum &bn) { set(bn); }
 
 	void set(const int num);
 	void set(const string &str);
 	void set(const char *num);
+	void set(const BigNum &bn);
 
 	BigNum add(BigNum const &other) const;
 	BigNum sub(BigNum const &other) const;
@@ -67,6 +68,11 @@ public:
 	void operator/=(BigNum const &other) { *this = *this / other; }
 	void operator/=(int const &n) { *this = *this / n; }
 
+	BigNum operator=(const int &n) { set(n); return *this; }
+	BigNum operator=(const char *num) { set(num); return *this; }
+	BigNum operator=(const string &str) { set(str); return *this; }
+	BigNum operator=(const BigNum &bn) { set(bn); return *this; }
+	
 	BigNum& operator++() {
 		*this = *this + 1;
 		return *this;

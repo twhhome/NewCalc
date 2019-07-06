@@ -30,6 +30,9 @@
     <ClCompile Include="Error.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Complex.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigNum.h">
@@ -39,6 +42,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Error.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Complex.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,8 +6,8 @@
 #include<string>
 using namespace std;
 
-enum ErrorType {DIVIDED_BY_ZERO, UNMATCHED_BRACKETS, UNDEFINED};
-string ErrorTypeString[] = {"DIVIDED BY ZERO", "UNMATCHED BRACKETS"};
+enum ErrorType {DIVIDED_BY_ZERO, UNMATCHED_BRACKETS, COMPARE_IMAGINARY, UNDEFINED};
+string ErrorTypeString[] = {"DIVIDED BY ZERO", "UNMATCHED BRACKETS", "TRYING TO COMPARE IMAGINARY NUMBERS"};
 
 class Error
 {
@@ -16,6 +16,7 @@ private:
 	int error_pos;
 public:
 	Error();
+	Error(ErrorType errorType);
 	Error(ErrorType errorType, int errorPos);
 	Error(const Error& other);
 	~Error();

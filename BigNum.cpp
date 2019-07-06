@@ -58,12 +58,6 @@ vector<int> vector_reverse(vector<int> *vec)
 	return ans;
 }
 
-BigNum::BigNum(BigNum const &src)
-{
-	s = src.s;
-	integer = src.integer;
-}
-
 void BigNum::set(const string &str)
 {
 	string tmp = strexczero(str);
@@ -95,6 +89,7 @@ void BigNum::set(const char *num)
 
 void BigNum::set(const int num)
 {
+	integer.clear();
 	int n = num;
 	if (num == 0)
 		integer.push_back(0);
@@ -111,6 +106,12 @@ void BigNum::set(const int num)
 		s = 0;
 	else
 		s = -1;
+}
+
+void BigNum::set(const BigNum &bn)
+{
+	s = bn.s;
+	integer = bn.integer;
 }
 
 BigNum BigNum::add(BigNum const &other) const

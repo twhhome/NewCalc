@@ -7,6 +7,12 @@ Error::Error()
 	this->error_pos = -1;
 }
 
+Error::Error(ErrorType errorType)
+{
+	this->error_type = errorType;
+	this->error_pos = -1;
+}
+
 Error::Error(ErrorType errorType, int errorPos)
 {
 	this->error_type = errorType;

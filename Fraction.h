@@ -53,6 +53,12 @@ public:
 	void operator/=(Fraction const &other) { *this = *this / other; }
 	void operator/=(int const &n) { *this = *this / n; }
 
+	Fraction operator=(const int &n) { num = n; den = 1; return *this; }
+	Fraction operator=(const Int &n) { num = n; den = 1; return *this; }
+	Fraction operator=(const char *str) { set(str); return *this; }
+	Fraction operator=(const string &str) { set(str); return *this; }
+	Fraction operator=(const Fraction &fr) { num = fr.num; den = fr.den; return *this; }
+
 	Fraction& operator++()
 	{
 		*this = *this + 1;

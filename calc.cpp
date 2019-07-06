@@ -152,6 +152,8 @@ Rational Calc(int s, int e)
 			}
 		}
 	}
+	if (!brackets.empty())
+		throw Error(UNMATCHED_BRACKETS, brackets.top());
 	return ans;
 }
 
@@ -165,19 +167,22 @@ void Output(Error const &error)
 {
 	cout << "Out[" << t << "]=";
 	cout << error << endl;
-	int count = 6;
-	int tmp_t = t;
-	while (tmp_t != 0)
+	if (error.get_pos() != -1)
 	{
-		count++;
-		tmp_t /= 10;
+		int count = 6;
+		int tmp_t = t;
+		while (tmp_t != 0)
+		{
+			count++;
+			tmp_t /= 10;
+		}
+		for (int i = 1; i <= count; i++)
+			cout << " ";
+		cout << str << endl;
+		for (int i = 1; i <= count; i++)
+			cout << " ";
+		for (int i = 0; i < error.get_pos(); i++)
+			cout << " ";
+		cout << "^" << endl;
 	}
-	for (int i = 1; i <= count; i++)
-		cout << " ";
-	cout << str << endl;
-	for (int i = 1; i <= count; i++)
-		cout << " ";
-	for (int i = 0; i < error.get_pos(); i++)
-		cout << " ";
-	cout << "^" << endl;
 }
